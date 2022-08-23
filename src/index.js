@@ -60,6 +60,12 @@ class App extends Component {
     })
   }
 
+  ClearCompleted = () => {
+    this.setState(({todoData}) => {
+      return { todoData: todoData.filter(item => item.completed === false) }
+    })
+  }
+
   render() {
 
     const countLeftItem = this.state.todoData.length - this.state.todoData.filter(item => item.completed).length
@@ -73,7 +79,7 @@ class App extends Component {
         <NewTaskForm ItemAdded={this.AddItem} />
         <section className='main'>
           <TaskList todos={todos} onDeleted={this.deleteItem} onToggleCompleted={this.onToggleCompleted} />
-          <Footer countLeftItem={countLeftItem} onFilterChange={this.onFilterChange}/>
+          <Footer countLeftItem={countLeftItem} onFilterChange={this.onFilterChange} ClearCompleted={this.ClearCompleted}/>
         </section>
       </section>
     )
