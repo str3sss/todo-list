@@ -1,5 +1,6 @@
 import Task from '../Task'
 import './TaskList.css'
+import PropTypes from 'prop-types'
 
 
 const TodoList = ({todos, onDeleted, onToggleCompleted}) => {
@@ -27,6 +28,12 @@ const TodoList = ({todos, onDeleted, onToggleCompleted}) => {
     todos: [],
     onDeleted: () => {},
     onToggleCompleted: ()=>{}
+  }
+
+  TodoList.propTypes = {
+    todos: PropTypes.array,
+    onDeleted: PropTypes.func,
+    onToggleCompleted: PropTypes.func
   }
   
   export default TodoList;

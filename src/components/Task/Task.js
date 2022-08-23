@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types'
 import React from 'react';
 import './Task.css'
 
@@ -12,6 +12,13 @@ export default class Task extends React.Component {
         onDeleted: () => {},
         onToggleCompleted: () => {},
         completed: false
+    }
+
+    static propTypes = {
+        description: PropTypes.string,
+        onDeleted: PropTypes.func,
+        onToggleCompleted: PropTypes.func,
+        completed: PropTypes.bool
     }
 
     render() {

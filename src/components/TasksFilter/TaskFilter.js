@@ -1,9 +1,13 @@
 import React from "react"
-
+import PropTypes from 'prop-types'
 
 export default class TaskFilter extends React.Component {
     static defaultProps = {
         onFilterChange : () => {}
+    }
+
+    static propTypes = {
+        onFilterChange: PropTypes.func
     }
 
     state = {
