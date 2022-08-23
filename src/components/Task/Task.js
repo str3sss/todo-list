@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react';
 import './Task.css'
+import { formatDistanceToNow } from 'date-fns'
 
 
 
@@ -11,18 +12,20 @@ export default class Task extends React.Component {
         description: 'not description',
         onDeleted: () => {},
         onToggleCompleted: () => {},
-        completed: false
+        completed: false,
+        date: new Date()
     }
 
     static propTypes = {
         description: PropTypes.string,
         onDeleted: PropTypes.func,
         onToggleCompleted: PropTypes.func,
-        completed: PropTypes.bool
+        completed: PropTypes.bool,
+        date: PropTypes.instanceOf(Date)
     }
 
     render() {
-        const {description, onDeleted, onToggleCompleted, completed} = this.props;
+        const {description, onDeleted, onToggleCompleted, completed, date} = this.props;
         
         let status = ''
         if (completed){
@@ -38,7 +41,7 @@ export default class Task extends React.Component {
                     <input className='toggle' type='checkbox' onClick={onToggleCompleted}></input>
                     <label>
                         <span className="description" >{description}</span>
-                        <span className="created">created 5 minutes ago</span>
+                        <span className="created">{formatDistanceToNow(date,{includeSeconds:true})}</span>
                     </label>
                     <button className='icon icon-edit'></button>
                     <button className='icon icon-destroy' onClick={onDeleted}></button>

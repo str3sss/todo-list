@@ -43,7 +43,7 @@ class App extends Component {
   }
 
   createTodoItem(description) {
-    return { description, completed: false, id: this.currentId++ }
+    return { description, completed: false, id: this.currentId++, date: new Date()}
   }
 
   AddItem = (text) => {
