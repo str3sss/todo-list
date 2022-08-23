@@ -1,18 +1,47 @@
 import React from "react"
 
 
-class TaskFilter extends React.Component {
+export default class TaskFilter extends React.Component {
+    state = {
+        all: "selected",
+        active:'',
+        completed:''
+    }
+
+    onAll = () => {
+        this.setState({
+            all: "selected",
+            active:'',
+            completed:''
+        })
+        this.props.onFilterChange('all')
+    }
+
+    onActive = () => {
+        this.setState({
+            all: '',
+            active:"selected",
+            completed:''
+        })
+        this.props.onFilterChange('active')
+    }
+
+    onCompleted = () => {
+        this.setState({
+            all: '',
+            active:'',
+            completed:"selected"
+        })
+        this.props.onFilterChange('completed')
+    }
+
     render() {
         return(
             <ul className="filters">
-                <li><button className="selected">All</button></li>
-                <li><button>Active</button></li>
-                <li><button>Completed</button></li>
+                <li><button className={this.state.all} onClick={this.onAll}>All</button></li>
+                <li><button className={this.state.active} onClick={this.onActive}>Active</button></li>
+                <li><button className={this.state.completed} onClick={this.onCompleted}>Completed</button></li>
             </ul>
         )
     }
-
 }
-
-
-export default TaskFilter
