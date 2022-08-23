@@ -5,7 +5,14 @@ import './Task.css'
 
 
 
-class Task extends React.Component {
+export default class Task extends React.Component {
+    
+    static defaultProps = {
+        description: 'not description',
+        onDeleted: () => {},
+        onToggleCompleted: () => {},
+        completed: false
+    }
 
     render() {
         const {description, onDeleted, onToggleCompleted, completed} = this.props;
@@ -33,5 +40,3 @@ class Task extends React.Component {
         )
     }
 }
-
-export default Task;

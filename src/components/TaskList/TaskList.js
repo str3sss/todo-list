@@ -22,5 +22,11 @@ const TodoList = ({todos, onDeleted, onToggleCompleted}) => {
       </ul>
     );
   };
+
+  TodoList.defaultProps = {
+    todos: [],
+    onDeleted: () => {},
+    onToggleCompleted: ()=>{}
+  }
   
   export default TodoList;

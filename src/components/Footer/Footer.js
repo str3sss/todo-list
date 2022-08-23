@@ -11,4 +11,10 @@ const Footer= ({countLeftItem, onFilterChange, ClearCompleted}) => {
     )
 }
 
+Footer.defaultProps = {
+    countLeftItem: 'unknown',
+    onFilterChange: () => {},
+    ClearCompleted: () => {}
+}
+
 export default Footer;

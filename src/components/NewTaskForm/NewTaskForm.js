@@ -3,6 +3,10 @@ import './NewTaskForm.css'
 
 
 export default class NewTaskForm extends Component {
+    static defaultProps = {
+        ItemAdded: () => {}
+    }
+
     state = {
         label: ''
     }

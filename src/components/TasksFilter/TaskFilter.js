@@ -2,6 +2,10 @@ import React from "react"
 
 
 export default class TaskFilter extends React.Component {
+    static defaultProps = {
+        onFilterChange : () => {}
+    }
+
     state = {
         all: "selected",
         active:'',
