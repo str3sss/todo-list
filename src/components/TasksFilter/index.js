@@ -1,3 +1,3 @@
 import TaskFilter from './TaskFilter'
 
-export default TaskFilter;
+export default TaskFilter
