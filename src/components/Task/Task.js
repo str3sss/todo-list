@@ -7,25 +7,34 @@ export default class Task extends React.Component {
   static defaultProps = {
     description: 'not description',
     onDeleted: () => {},
+    onEdit: () => {},
     onToggleCompleted: () => {},
     completed: false,
-    date: new Date(),
+    date: 0,
   }
 
   static propTypes = {
     description: PropTypes.string,
     onDeleted: PropTypes.func,
+    onEdit: PropTypes.func,
     onToggleCompleted: PropTypes.func,
     completed: PropTypes.bool,
-    date: PropTypes.instanceOf(Date),
+    date: PropTypes.number,
   }
 
   render() {
-    const { description, onDeleted, onToggleCompleted, completed, date } = this.props
-
+    const { description, onDeleted, onEdit, onToggleCompleted, completed, edit, date } = this.props
     let status = ''
+    let editForm = null
+
     if (completed) {
       status = 'completed'
+    } else {
+      status = ''
+    }
+    if (edit) {
+      status = 'editing'
+      editForm = <input type="text" className="edit" />
     } else {
       status = ''
     }
@@ -38,9 +47,10 @@ export default class Task extends React.Component {
             <span className="description">{description}</span>
             <span className="created">{formatDistanceToNow(date, { includeSeconds: true })}</span>
           </label>
-          <button className="icon icon-edit"></button>
+          <button className="icon icon-edit" onClick={onEdit}></button>
           <button className="icon icon-destroy" onClick={onDeleted}></button>
         </div>
+        {editForm}
       </li>
     )
   }

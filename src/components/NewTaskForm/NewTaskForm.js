@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 
 export default class NewTaskForm extends Component {
   static defaultProps = {
-    ItemAdded: () => {},
+    itemAdded: () => {},
   }
 
   static propTypes = {
-    ItemAdded: PropTypes.func,
+    itemAdded: PropTypes.func,
   }
 
   state = {
@@ -20,7 +20,7 @@ export default class NewTaskForm extends Component {
   }
 
   onSubmit = (e) => {
-    this.props.ItemAdded(this.state.label)
+    this.props.itemAdded(this.state.label)
     this.setState({ label: '' })
     e.preventDefault()
   }

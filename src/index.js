@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { createRoot } from 'react-dom/client'
+import { v4 as uuidv4 } from 'uuid'
 
 import Footer from './components/Footer'
 import NewTaskForm from './components/NewTaskForm'
@@ -7,11 +8,12 @@ import TaskList from './components/TaskList'
 import './index.css'
 
 class App extends Component {
-  currentId = 1
-
-  state = {
-    todoData: [this.createTodoItem('first job'), this.createTodoItem('second task'), this.createTodoItem('Third todo')],
-    filter: 'all',
+  constructor() {
+    super()
+    this.state = {
+      todoData: JSON.parse(window.localStorage.getItem('todoData')) || [this.createTodoItem('Task')],
+      filter: 'all',
+    }
   }
 
   onFilterChange = (filter) => {
@@ -38,11 +40,21 @@ class App extends Component {
     })
   }
 
-  createTodoItem(description) {
-    return { description, completed: false, id: this.currentId++, date: new Date() }
+  onEdit = (id) => {
+    this.setState(({ todoData }) => {
+      const index = todoData.findIndex((item) => item.id === id)
+      const newElem = { ...todoData[index] }
+      newElem.edit = !newElem.edit
+
+      return { todoData: [...todoData.slice(0, index), newElem, ...todoData.slice(index + 1)] }
+    })
   }
 
-  AddItem = (text) => {
+  createTodoItem(description) {
+    return { description, completed: false, edit: false, id: uuidv4(), date: +new Date() }
+  }
+
+  addItem = (text) => {
     const newItem = this.createTodoItem(text)
 
     this.setState(({ todoData }) => {
@@ -56,7 +68,7 @@ class App extends Component {
     })
   }
 
-  ClearCompleted = () => {
+  clearCompleted = () => {
     this.setState(({ todoData }) => {
       return { todoData: todoData.filter((item) => item.completed === false) }
     })
@@ -68,15 +80,32 @@ class App extends Component {
     const filter = this.state.filter
     const todos = this.FilterTodos(items, filter)
 
+    window.localStorage.setItem('todoData', JSON.stringify(this.state.todoData))
+    if (this.state.todoData.length === 0) {
+      return (
+        <section className="todoapp">
+          <NewTaskForm itemAdded={this.addItem} />
+          <div>
+            <p>Create todo</p>
+          </div>
+        </section>
+      )
+    }
+
     return (
       <section className="todoapp">
-        <NewTaskForm ItemAdded={this.AddItem} />
+        <NewTaskForm itemAdded={this.addItem} />
         <section className="main">
-          <TaskList todos={todos} onDeleted={this.deleteItem} onToggleCompleted={this.onToggleCompleted} />
+          <TaskList
+            todos={todos}
+            onDeleted={this.deleteItem}
+            onToggleCompleted={this.onToggleCompleted}
+            onEdit={this.onEdit}
+          />
           <Footer
             countLeftItem={countLeftItem}
             onFilterChange={this.onFilterChange}
-            ClearCompleted={this.ClearCompleted}
+            clearCompleted={this.clearCompleted}
           />
         </section>
       </section>
