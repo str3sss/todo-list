@@ -1,63 +1,48 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+const FILTERS = {
+  ALL: 'all',
+  COMPLETED: 'completed',
+  ACTIVE: 'active',
+}
+
 export default class TaskFilter extends React.Component {
   static defaultProps = {
     onFilterChange: () => {},
+    filter: 'all',
   }
 
   static propTypes = {
     onFilterChange: PropTypes.func,
-  }
-
-  state = {
-    all: 'selected',
-    active: '',
-    completed: '',
-  }
-
-  onAll = () => {
-    this.setState({
-      all: 'selected',
-      active: '',
-      completed: '',
-    })
-    this.props.onFilterChange('all')
-  }
-
-  onActive = () => {
-    this.setState({
-      all: '',
-      active: 'selected',
-      completed: '',
-    })
-    this.props.onFilterChange('active')
-  }
-
-  onCompleted = () => {
-    this.setState({
-      all: '',
-      active: '',
-      completed: 'selected',
-    })
-    this.props.onFilterChange('completed')
+    filter: PropTypes.string,
   }
 
   render() {
+    const filter = this.props.filter
     return (
       <ul className="filters">
         <li>
-          <button className={this.state.all} onClick={this.onAll}>
+          <button
+            className={filter === FILTERS.ALL ? 'selected' : ''}
+            onClick={() => this.props.onFilterChange(FILTERS.ALL)}
+          >
             All
           </button>
         </li>
         <li>
-          <button className={this.state.active} onClick={this.onActive}>
+          <button
+            className={filter === FILTERS.ACTIVE ? 'selected' : ''}
+            onClick={() => this.props.onFilterChange(FILTERS.ACTIVE)}
+          >
             Active
           </button>
         </li>
         <li>
-          <button className={this.state.completed} onClick={this.onCompleted}>
+          <button
+            className={filter === FILTERS.COMPLETED ? 'selected' : ''}
+            onClick={() => this.props.onFilterChange(FILTERS.COMPLETED)}
+          >
             Completed
           </button>
         </li>

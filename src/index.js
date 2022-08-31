@@ -103,6 +103,7 @@ class App extends Component {
             onEdit={this.onEdit}
           />
           <Footer
+            filter={filter}
             countLeftItem={countLeftItem}
             onFilterChange={this.onFilterChange}
             clearCompleted={this.clearCompleted}
