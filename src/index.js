@@ -40,12 +40,14 @@ class App extends Component {
     })
   }
 
-  onEdit = (id) => {
+  onEdit = (id, description = null) => {
     this.setState(({ todoData }) => {
       const index = todoData.findIndex((item) => item.id === id)
       const newElem = { ...todoData[index] }
       newElem.edit = !newElem.edit
-
+      if (typeof description === 'string') {
+        newElem.description = description
+      }
       return { todoData: [...todoData.slice(0, index), newElem, ...todoData.slice(index + 1)] }
     })
   }

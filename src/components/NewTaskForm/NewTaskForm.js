@@ -17,7 +17,7 @@ export default class NewTaskForm extends Component {
 
   onLabelChange = (e) => {
     this.setState((prevState) => {
-      if (prevState !== e.target.value) {
+      if (prevState.label !== e.target.value) {
         return { label: e.target.value }
       }
     })

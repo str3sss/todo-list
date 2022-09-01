@@ -13,7 +13,7 @@ const TodoList = ({ todos, onDeleted, onEdit, onToggleCompleted }) => {
         key={id}
         onDeleted={() => onDeleted(id)}
         onToggleCompleted={() => onToggleCompleted(id)}
-        onEdit={() => onEdit(id)}
+        onEdit={(description) => onEdit(id, description)}
       />
     )
   })
