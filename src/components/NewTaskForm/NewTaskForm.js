@@ -1,49 +1,48 @@
-import { Component } from 'react'
+import { useState } from 'react'
 import './NewTaskForm.css'
 import PropTypes from 'prop-types'
 
-export default class NewTaskForm extends Component {
-  static defaultProps = {
-    itemAdded: () => {},
+function NewTaskForm({ itemAdded }) {
+  const [label, setLabel] = useState('')
+  const [min, setMin] = useState('')
+  const [sec, setSec] = useState('')
+
+  const onLabelChange = (e) => {
+    setLabel(e.target.value)
+  }
+  const onMinChange = (e) => {
+    setMin(e.target.value)
+  }
+  const onSecChange = (e) => {
+    setSec(e.target.value)
   }
 
-  static propTypes = {
-    itemAdded: PropTypes.func,
-  }
-
-  state = {
-    label: '',
-  }
-
-  onLabelChange = (e) => {
-    this.setState((prevState) => {
-      if (prevState.label !== e.target.value) {
-        return { label: e.target.value }
-      }
-    })
-  }
-
-  onSubmit = (e) => {
-    this.props.itemAdded(this.state.label)
-    this.setState({ label: '' })
+  const onSubmit = (e) => {
     e.preventDefault()
+    itemAdded(label, +min, +sec)
+    setLabel('')
+    setMin('')
+    setSec('')
   }
 
-  render() {
-    return (
-      <header className="header">
-        <h1>todos</h1>
-        <form onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            className="new-todo"
-            placeholder="What needs to be done?"
-            value={this.state.label}
-            autoFocus
-            onChange={this.onLabelChange}
-          />
-        </form>
-      </header>
-    )
-  }
+  return (
+    <header className="header">
+      <h1>todos</h1>
+      <form onSubmit={onSubmit} className="new-todo-form">
+        <input type="text" className="new-todo" placeholder="Task" value={label} onChange={onLabelChange} />
+        <input type="text" className="new-todo-form__timer" placeholder="Min" value={min} onChange={onMinChange} />
+        <input type="text" className="new-todo-form__timer" placeholder="Sec" value={sec} onChange={onSecChange} />
+        <button type="submit" />
+      </form>
+    </header>
+  )
 }
+NewTaskForm.propTypes = {
+  itemAdded: PropTypes.func,
+}
+
+NewTaskForm.defaultProps = {
+  itemAdded: () => {},
+}
+
+export default NewTaskForm
